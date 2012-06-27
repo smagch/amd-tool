@@ -1,11 +1,33 @@
 var amd = require('../lib/amd')
   , expect = require('expect.js')
-  , resolve = require('path').resolve;
+  , path = require('path')
+  , resolve = path.resolve
+  , config = {
+      baseUrl: './test/fixtures'
+    };
 
 describe('amd', function () {
 
-  describe('.list(path)', function () {
+  describe('(options)', function (done) {
+    it('should override given options', function (done) {
+      var options = amd(config).options;
+      expect(resolve(__dirname, 'fixtures')).to.eql(options.baseUrl);
+      done();
+    });
+  });
 
+  describe('.list(path)', function () {
+    it('should return 1 deps', function (done) {
+      amd({
+        baseUrl: './test/fixtures/simple'
+      })
+      .list('index', function (err, deps) {
+        if (err) return done(err);
+        expect(deps).to.be.an('array');
+        expect(deps).to.have.length(3);
+        done();
+      });
+    });
   });
 
   describe('.getDependencies(data)', function () {
@@ -30,6 +52,9 @@ describe('amd', function () {
       expect(deps).to.have.length(0);
       done();
     });
+
+    // TODO test `require`
+    //it("should return")
   });
 });
   
