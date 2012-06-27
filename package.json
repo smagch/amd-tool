@@ -2,7 +2,7 @@
   "name": "amd-tool",
   "version": "0.0.0",
   "description": "amd command line tool",
-  "main": "./lib/amd.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

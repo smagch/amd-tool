@@ -17,7 +17,8 @@ describe('amd', function () {
   });
 
   describe('.list(path)', function () {
-    it('should return 1 deps', function (done) {
+
+    it('should work with baseUrl conf', function (done) {
       amd({
         baseUrl: './test/fixtures/simple'
       })
@@ -28,10 +29,19 @@ describe('amd', function () {
         done();
       });
     });
+
+    it('should read config at runtime', function (done) {
+      amd().list('./test/fixtures/simple/index', function (err, deps) {
+        if (err) return done(err);
+        expect(deps).to.be.an('array');
+        expect(deps).to.have.length(3);
+        done();
+      });
+    });
   });
 
   describe('.getDependencies(data)', function () {
-    
+
     it('should return empty Array when it has no deps', function (done) {
       var deps = amd().getDependencies('define({});');
       expect(deps).to.be.an('array');

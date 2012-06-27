@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+  , resolve = require('path').resolve
+  , amd = require('..')
+  , debug = require('debug')('amd');
+
+program
+  .version(amd.version)
+  .usage('[options] [file|name ...]')
+  .option('-c, --config [file]', 'specify a file which has a `require.config()`')
+  .option('-ls, --list [file]', 'get dependencies list by order')
+  //.option('-a --absolute', 'log paths as absolute path')
+  //.option('-t, --tree [file]', 'get dependencies by tree')
+  //.option('-o, --optimize [file]', 'optimize')
+  //.option('--require', 'requirejs')
+  //.options('--curl', 'curljs)
+  .parse(process.argv);
+
+function help() {
+  console.log(program.helpInformation());
+  program.emit('--help');
+  process.exit(0);
+}
+
+// if (!program.args.length) return help();
+
+var config = program.config || {};
+debug('config : ' + config);
+
+// get Amd Object by given config
+var $amd = amd(config);
+
+if (program.list) {
+  $amd.list(program.list, function (err, deps) {
+    console.log(deps.join('\n'));
+  });
+//} else if (program.tree) {}  
+} else {
+  return help();
+}
