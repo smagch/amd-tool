@@ -1,0 +1,26 @@
+{
+  "name": "amd-tool",
+  "version": "0.0.0",
+  "description": "amd command line tool",
+  "main": "./lib/amd.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/smagch/amd-tool.git"
+  },
+  "dependencies": {
+    "underscore": "~1.3",
+    "commander": "~0.6",
+    "debug": "~0.7",
+    "archy": "0",
+    "async": "~0.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.2",
+    "expect.js": "*"
+  },
+  "author": "smagch",
+  "license": "MIT"
+}
