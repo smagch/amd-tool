@@ -38,6 +38,16 @@ describe('amd', function () {
         done();
       });
     });
+
+    // suger http://requirejs.org/docs/whyamd.html#sugar
+    it('should work with suger', function (done) {
+      amd().list('./test/fixtures/simple/suger', function (err, deps) {
+        if (err) return done(err);
+        expect(deps).to.be.an('array');
+        expect(deps).to.have.length(3);
+        done();
+      });
+    });
   });
 
   describe('.getDependencies(data)', function () {
