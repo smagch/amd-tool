@@ -2,17 +2,72 @@ var amd = require('../lib/amd')
   , expect = require('expect.js')
   , path = require('path')
   , resolve = path.resolve
-  , config = {
+  , testConfig = {
       baseUrl: './test/fixtures'
-    };
+    }
+  , testDir = resolve(__dirname, 'fixtures')
+  , simpleDir = resolve(testDir, 'simple');
 
 describe('amd', function () {
 
   describe('(options)', function (done) {
-    it('should override given options', function (done) {
-      var options = amd(config).options;
-      expect(resolve(__dirname, 'fixtures')).to.eql(options.baseUrl);
+    it('should override given options  when the first argument is a Object', function (done) {
+      var options = amd(testConfig).options;
+      expect(testDir).to.eql(options.baseUrl);
       done();
+    });
+
+    it('should load config when the first argument is a String', function (done) {
+       amd('./test/fixtures/simple/config.json')
+        .list('index-noconf', function (err, deps) {
+          if (err) return done(err);
+          expect(deps).to.be.an('array');
+          expect(deps).to.have.length(3);
+          done();
+        });
+     });
+
+    it('should load config when the first argument is a String', function (done) {
+      amd('./test/fixtures/simple/config.js')
+        .list('index-noconf', function (err, deps) {
+          if (err) return done(err);
+          expect(deps).to.be.an('array');
+          expect(deps).to.have.length(3);
+          done();
+        });
+     });
+  });
+
+  describe('.config(conf)', function () {
+
+    it('should set config', function (done) {
+      var options = {
+            baseUrl: './test/fixtures/simple'
+          };
+      amd().config(options).list('index', function (err, deps) {
+        if (err) return done(err);
+        expect(deps).to.be.an('array');
+        expect(deps).to.have.length(3);
+        done();
+      });
+    });
+
+    it('should load json when extname is json', function (done) {
+      amd().config('./test/fixtures/simple/config.json').list('index-noconf', function (err, deps) {
+        if (err) return done(err);
+        expect(deps).to.be.an('array');
+        expect(deps).to.have.length(3);
+        done();
+      });
+    });
+
+    it('should load amd style config', function (done) {
+      amd().config('./test/fixtures/simple/config.js').list('index-noconf', function (err, deps) {
+        if (err) return done(err);
+        expect(deps).to.be.an('array');
+        expect(deps).to.have.length(3);
+        done();
+      });
     });
   });
 
