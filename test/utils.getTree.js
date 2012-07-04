@@ -9,6 +9,11 @@ var amd = require('../lib/amd')
       c: ['d'],
       d: []
     }
+  , data = {
+      depMap: depMap
+    , errorMap: {}
+    , absMap: {}
+    }
   , _tree = {
       label: 'a',
       nodes: [
@@ -32,7 +37,7 @@ var amd = require('../lib/amd')
 
 describe('util.getTree', function () {
   it('should return archy formatted Object', function (done) {
-    var tree = utils.getTree('a', depMap);
+    var tree = utils.getTree('a', data);
     expect(tree).to.eql(_tree);
     done();
   });
